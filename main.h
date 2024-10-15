@@ -21,6 +21,7 @@ void printShortStar();
 void printLongStar();
 void printItemDot();
 void printCommandSign();
+void printSlowDot();
 
 void printGreetMenu();
 void printMainMenu();
@@ -41,7 +42,7 @@ void error_5();
 void error_6();
 void error_7();
 
-/* 个人呢学生类 */
+/* 个人学生类 */
 class student{
     friend class studentList;
 private:
@@ -50,6 +51,7 @@ private:
     int DSScore,mathScore,enScore;
     student * next; //指向下一个学生
 public:
+    int check_score(int tempscore);
     void add();
     // void readFile(istream & in); //有bug的读入文件
     void display(); //打印学生信息

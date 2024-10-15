@@ -1,9 +1,20 @@
 #include "main.h"
 
 /******************************************************
- * 学生类添加函数
+ * 学生类函数
  */
-void student::add() {
+
+int student::check_score(int tempScore){
+    if(tempScore<0||tempScore>100){
+        printItemDot();
+        cout<<"error!: 学生成绩输入有误,成绩范围0~100,请再次尝试:";
+        cin>>tempScore;
+        return check_score(tempScore);
+    }
+    return tempScore;
+}
+
+void student::add(){
     printItemDot();
     cout<<"请输入学生姓名:";
     cin>>name;
@@ -14,50 +25,27 @@ void student::add() {
     cout<<"请输入学生学号(十位):";
     cin>>tempId;
     while(tempId.length()!=10){
-        printLongStar();
-        cout<<endl;
         printItemDot();
-        cout<<"学生学号输入有误,学号为十位整数,请再次尝试:";
+        cout<<"error!: 学生学号输入有误,学号为十位整数,请再次尝试:";
         cin>>tempId;
     }
-    id = tempId;
+    id=tempId;
 
     //成绩处理
     printItemDot();
-    cout<<"请输入C++课程的期末成绩:";
+    cout<<"请输入DS课程的期末成绩:";
     cin>>tempScore;
-    while(tempScore<0||tempScore>100){
-        printLongStar();
-        cout<<endl;
-        printItemDot();
-        cout<<"学生成绩输入有误,成绩范围0~100,请再次尝试:";
-        cin>>tempScore;
-    }
-    DSScore = tempScore;
+    DSScore=check_score(tempScore);
 
     printItemDot();
     cout<<"请数学课程的期末成绩:";
     cin>>tempScore;
-    while(tempScore<0||tempScore>100){
-        printLongStar();
-        cout<<endl;
-        printItemDot();
-        cout<<"学生成绩输入有误,成绩范围0~100,请再次尝试:";
-        cin>>tempScore;
-    }
-    mathScore = tempScore;
+    mathScore=check_score(tempScore);
 
     printItemDot();
     cout<<"请英语课程的期末成绩:";
     cin>>tempScore;
-    while(tempScore<0||tempScore>100){
-        printLongStar();
-        cout<<endl;
-        printItemDot();
-        cout<<"学生成绩输入有误,成绩范围0~100,请再次尝试:";
-        cin>>tempScore;
-    }
-    enScore = tempScore;
+    enScore=check_score(tempScore);
     next=NULL;
 }
 
@@ -74,8 +62,7 @@ void student::display(){
     cout<<endl;
 }
 
-//与传入的对象交换信息 用于简单排序法时交换
-void student::swap(student *toExchange) {
+void student::swap(student *toExchange){//与传入的对象交换信息 用于简单排序法时交换
     string tempName,tempId;
     int tempDSScore,tempMathScore,tempEnScore;
     tempName=name;name=toExchange->name;toExchange->name=tempName;
@@ -88,19 +75,19 @@ void student::swap(student *toExchange) {
 /*******************************************************
  * 学生列表类构造函数
  */
-studentList::studentList() {
+studentList::studentList(){
     // in.open("stuDate.txt");//有bug的读入文件
     // if(!in){
-        // cout<<"*欢迎新用户,请先输入用户信息再使用.";
+        // cout<<"\t*欢迎新用户,请先输入用户信息再使用.";
         // printShortStar();
         // cout<<endl;
         first =NULL;
         last =NULL;
-        num = 0;
+        num=0;
     // }else{
-    //     first = new student;
-    //     last = first;
-    //     num = 0;
+    //     first=new student;
+    //     last=first;
+    //     num=0;
     //     while(!in.eof()){
     //         last->readFile(in);
     //         //数据结束 但会余留一个空节点
@@ -113,11 +100,10 @@ studentList::studentList() {
     //     stuL.removeLast();
 
     //     in.close();
-    //     cout<<"*欢迎再次使用,读取学生信息成功.";
+    //     cout<<"\t*欢迎再次使用,读取学生信息成功.";
     //     printShortStar();
     //     cout<<endl;
     // }
-
 }
 
 /**
@@ -126,34 +112,28 @@ studentList::studentList() {
 void studentList::add(){
     student * t =new student;
     t->add();
-    student * p = first;
+    student * p=first;
     while(p){
         if(p->id==t->id)
         {
             printItemDot();
-            cout<<"注意:\n    学号输入错误或该学生已经存在\n    如需添加，请先删除原纪录再重新录入!"<<endl;
+            cout<<"error!: 学号输入错误或该学生已经存在 如需添加，请先删除原纪录再重新录入!"<<endl;
             return;
         }
         p=p->next;
     }
     num++;
-    if(first==NULL)
-    {
+    if(first==NULL){
         first=last=t;
-        cout<<"*学生信息创建成功:) ";
-        printShortStar();
-        cout<<endl;
+        cout<<"\t*学生信息创建成功:) "<<endl; Sleep(1000);
         printStudentTableTitle();
         last->display();
         printStudentTableFoot();
     }
-    else
-    {
+    else{
         last->next=t;
         last=last->next;
-        cout<<"*学生信息创建成功:) ";
-        printShortStar();
-        cout<<endl;
+        cout<<"\t*学生信息创建成功:) "<<endl; Sleep(1000);
         printStudentTableTitle();
         last->display();
         printStudentTableFoot();
@@ -163,37 +143,29 @@ void studentList::add(){
 /**
  *通过Id修改学生信息
  */
-void studentList::edit() {
+void studentList::edit(){
     string tempId;
     char isCheck;
-    student *t = first;
+    student *t=first;
 
-    printDividerStar();
-    cout<<endl;
-    printItemDot();cout<<"请输入要修改的学生学号:";
+    printItemDot(); cout<<"请输入要修改的学生学号:";
     cin>>tempId;
-    //学号验证
-    while(tempId.length()!=10){
-        printLongStar();
-        cout<<endl;
+    while(tempId.length()!=10){//学号验证
         printItemDot();
-        cout<<"学生学号输入有误,学号为十位整数,请再次尝试:";
+        cout<<"error!: 学生学号输入有误,学号为十位整数,请再次尝试:";
         cin>>tempId;
     }
     while(t){
-        if(t->id==tempId){
-            break;
-        }
+        if(t->id==tempId) break;
         t=t->next;
     }
 
-    //t已跑到最后为空
-    if(!t){
+    if(!t){//t到最后为空
         printItemDot();
-        cout<<"注意:\n    未找到您所要修改的学生\n     请确认学号后重试"<<endl;
+        cout<<"error!:\n    未找到您所要修改的学生\n     请确认学号后重试"<<endl;
         return;
     }else{
-        cout<<"*已为您查询到该学生 ";
+        cout<<"\t*已为您查询到该学生 ";
         printShortStar();
         cout<<endl;
         printStudentTableTitle();
@@ -201,66 +173,60 @@ void studentList::edit() {
         printStudentTableFoot();
     }
     cout<<endl;
-    printItemDot();cout<<"确认修改此学生吗(y/n):";
-    cin>>isCheck;
+    printItemDot(); cout<<"确认修改此学生吗(y/n) (默认为y) :";
+    // cin>>isCheck;
+    getchar(); scanf("%c",&isCheck); //getchar先读掉前面的回车，用scanf来读入回车的情况
     switch(isCheck){
         case 'Y':
-        case 'y': {
-            //确认修改
+        case 'y':
+        case '\n': {
             printItemDot();
-            cout << "修改学生姓名:";
-            cin >> t->name;
-            int tempScore = 0;
+            cout<<"修改学生姓名:";
+            cin>>t->name;
+            int tempScore=0;
 
-            //成绩处理
-            printItemDot();
-            cout << "修改C++课程的期末成绩:";
-            cin >> tempScore;
-            while(tempScore < 0 || tempScore > 100) {
-                printLongStar();
-                cout << endl;
+            printItemDot();//成绩处理
+            cout<<"修改DS课程的期末成绩:";
+            cin>>tempScore;
+            while(tempScore<0 || tempScore>100){
                 printItemDot();
-                cout << "学生成绩输入有误,成绩范围0~100,请再次尝试:";
-                cin >> tempScore;
+                cout<<"error!: 学生成绩输入有误,成绩范围0~100,请再次尝试:";
+                cin>>tempScore;
             }
-            t->DSScore = tempScore;
+            t->DSScore=tempScore;
 
             printItemDot();
-            cout << "修改数学课程的期末成绩:";
-            cin >> tempScore;
-            while(tempScore < 0 || tempScore > 100) {
-                printLongStar();
-                cout << endl;
+            cout<<"修改数学课程的期末成绩:";
+            cin>>tempScore;
+            while(tempScore<0 || tempScore>100){
                 printItemDot();
-                cout << "学生成绩输入有误,成绩范围0~100,请再次尝试:";
-                cin >> tempScore;
+                cout<<"error!: 学生成绩输入有误,成绩范围0~100,请再次尝试:";
+                cin>>tempScore;
             }
-            t->mathScore = tempScore;
+            t->mathScore=tempScore;
 
             printItemDot();
-            cout << "修改英语课程的期末成绩:";
-            cin >> tempScore;
-            while(tempScore < 0 || tempScore > 100) {
-                printLongStar();
-                cout << endl;
+            cout<<"修改英语课程的期末成绩:";
+            cin>>tempScore;
+            while(tempScore<0 || tempScore>100){
                 printItemDot();
-                cout << "学生成绩输入有误,成绩范围0~100,请再次尝试:";
-                cin >> tempScore;
+                cout<<"error!: 学生成绩输入有误,成绩范围0~100,请再次尝试:";
+                cin>>tempScore;
             }
-            t->enScore = tempScore;
+            t->enScore=tempScore;
 
-            printItemDot();
-            cout << "学生信息已成功修改." << endl;
+            cout<<"\t>./学生信息已成功修改."<<endl;
             printStudentTableTitle();
             t->display();
             printStudentTableFoot();
+            Sleep(500);
         }
             break;
         case 'N':
         case 'n':
         default :
-            printItemDot();
-            cout<<"学生信息修改已取消.";
+            cout<<"\t>./学生信息修改已取消."<<endl;
+            Sleep(500);
             break;
     }
 }
@@ -271,9 +237,7 @@ void studentList::edit() {
 void studentList::removeLast(){
     //删除空节点 p为倒数第二个
     student *p=first;
-    while(p->next->next!=NULL){
-        p=p->next;
-    }
+    while(p->next->next!=NULL){ p=p->next; }
     free(p->next);
     p->next=NULL;
     last=p;
@@ -284,119 +248,91 @@ void studentList::removeLast(){
  */
 void studentList::remove(){
     string tempId;
-    cout<<"*准备删除学生信息 ";
-    printShortStar();
-    cout<<endl;
-    printItemDot();
+    cout<<"\t>./准备删除学生信息 "; printSlowDot();
     cout<<"请输入要删除的学生的学号: ";
     cin>>tempId;
-    student *t = first;
+    student *t=first;
     student *p=NULL;
     while(t){
-        if(t->id==tempId)
-            break;
-        p=t;
-        t=t->next;
+        if(t->id==tempId) break;
+        p=t; t=t->next;
     }
-    //t到最后为空
-    if(!t){
+    if(!t){//t到最后为空
         printItemDot();
-        cout<<"注意:\n    未找到要删除的学生\n     请确认学号后重试"<<endl;
+        cout<<"error!: 未找到要删除的学生，请确认学号后重试"<<endl;
         return;
     }
-    //第一个就相同
-    if(!p) {
+    if(!p){//特判第一个就相同
         first=first->next;
         printItemDot();
-        cout<<"恭喜:\n    您已成功删除学生"<<tempId<<endl;
+        cout<<"Congratulations!: 您已成功删除学生"<<tempId<<endl;
         delete t;
     }
     else{
-        //把t的下一个地址赋给p的next
-        p->next=t->next;
+        p->next=t->next;//把t的下一个地址赋给p的next
         printItemDot();
-        cout<<"恭喜:\n    您已成功删除学生"<<tempId<<endl;
+        cout<<"Congratulations!: 您已成功删除学生"<<tempId<<endl;
         delete t;
     }
-    num--;
+    --num;
+    Sleep(1000);
 }
 
 /**
  *通过Id搜索学生
  */
-void studentList::searchById() {
+void studentList::searchById(){
     string tempId;
-    student *t = first;
+    student *t=first;
 
-    printDividerStar();
-    cout<<endl;
-    printItemDot();cout<<"请输入要查找的学生学号:";
+    printItemDot(); cout<<"请输入要查找的学生学号:";
     cin>>tempId;
-    //学号验证
-    while(tempId.length()!=10){
-        printLongStar();
-        cout<<endl;
+    while(tempId.length()!=10){//学号验证
         printItemDot();
-        cout<<"学生学号输入有误,学号为十位整数,请再次尝试:";
+        cout<<"error!: 学生学号输入有误，学号为十位整数，请再次尝试：";
         cin>>tempId;
     }
     while(t){
-        if(t->id==tempId){
-            break;
-        }
+        if(t->id==tempId) break;
         t=t->next;
     }
 
-    //t已跑到最后为空
-    if(!t){
+    if(!t){//t已跑到最后为空
         printItemDot();
-        cout<<"注意:\n    未找到您所要查找的学生\n     请确认学号后重试"<<endl;
+        cout<<"error!:\n    未找到您所要查找的学生\n     请确认学号后重试"<<endl;
         return;
     }else{
-        cout<<"*已为您查询到以下学生 ";
-        printShortStar();
-        cout<<endl;
+        cout<<"\t*已为您查询到以下学生 "<<endl;
         printStudentTableTitle();
         t->display();
         printStudentTableFoot();
     }
-
 }
 
 /**
  *通过Name搜索学生
  */
-void studentList::searchByName() {
+void studentList::searchByName(){
     string tempName;
-    student *t = first;
+    student *t=first;
     student *p[] ={NULL};
-    int foundCount = 0;
+    int foundCount=0;//从0开始的计数器
 
-    printDividerStar();
-    cout<<endl;
-    printItemDot();cout<<"请输入要查找的学生姓名:";
+    printItemDot(); cout<<"请输入要查找的学生姓名:";
     cin>>tempName;
     while(t){
-        if(t->name==tempName){
-            p[foundCount]=t;
-            foundCount++;
-        }
+        if(t->name==tempName) p[foundCount++]=t;
         t=t->next;
     }
 
-    //t已跑到最后为空
-    if(!p[0]){
+    if(!p[0]){//p[0]为空，即t已跑到最后为空
         printItemDot();
-        cout<<"注意:\n    未找到您所要查找的学生\n     请确认姓名后重试"<<endl;
+        cout<<"error!: 未找到您所要查找的学生，请确认姓名后重试"<<endl;
         return;
     }else{
-        cout<<"*已为您查询到以下学生 ";
-        printShortStar();
-        cout<<endl;
+        cout<<"\t*已为您查询到以下学生 "<<endl;
         printStudentTableTitle();
-        for(int i = 0; i < foundCount ; ++i) {
-            p[i]->display();
-        }
+        for(int i=0;i<foundCount;++i) p[i]->display();
         printStudentTableFoot();
     }
 }
@@ -404,57 +340,46 @@ void studentList::searchByName() {
 /**
  *通过Id排序学生
  */
-void studentList::sortById() {
+void studentList::sortById(){
     student *t=first;
     student *p=NULL;
 
-    //无数据后的退出
-    if(t==NULL){
+    if(t==NULL){//无数据
         printItemDot();
-        cout<<"注意:\n    当前无学生数据,请先添加后排序"<<endl;
+        cout<<"error!: 当前无学生数据,请先添加后排序"<<endl;
         return;
     }
 
-    //链表 简单选择排序法
-    for(;t->next!=NULL;t=t->next) {
-        for(p=t->next;p!=NULL;p=p->next) {
-            if(p->id < t->id){
-                p->swap(t);
-            }
-        }
-    }
+    for(;t->next!=NULL;t=t->next)//冒泡 //需要更新为堆排序
+        for(p=t->next;p!=NULL;p=p->next) if(p->id<t->id) p->swap(t);
 
-    cout<<"*已按学生学号排序成功 ";
-    printShortStar();
-    cout<<endl;
+    cout<<"\t*已按学生学号排序成功 "<<endl;
     stuL.show();
-
 }
 
 /**
  *通过DS排序学生
  */
-void studentList::sortByDS() {
+void studentList::sortByDS(){
     student *t=first;
     student *p=NULL;
 
-    //无数据后的退出
-    if(t==NULL){
+    if(t==NULL){//无数据后的退出
         printItemDot();
-        cout<<"注意:\n    当前无学生数据,请先添加后排序"<<endl;
+        cout<<"error!:\n    当前无学生数据,请先添加后排序"<<endl;
         return;
     }
 
     //链表 简单选择排序法
-    for(;t->next!=NULL;t=t->next) {
-        for(p=t->next;p!=NULL;p=p->next) {
-            if(p->DSScore > t->DSScore){
+    for(;t->next!=NULL;t=t->next){
+        for(p=t->next;p!=NULL;p=p->next){
+            if(p->DSScore>t->DSScore){
                 p->swap(t);
             }
         }
     }
 
-    cout<<"*已按C++成绩排序成功 ";
+    cout<<"\t*已按DS成绩排序成功 ";
     printShortStar();
     cout<<endl;
     stuL.show();
@@ -464,27 +389,26 @@ void studentList::sortByDS() {
 /**
  *通过Math排序学生
  */
-void studentList::sortByMath() {
+void studentList::sortByMath(){
     student *t=first;
     student *p=NULL;
 
-    //无数据后的退出
-    if(t==NULL){
+    if(t==NULL){//无数据后的退出
         printItemDot();
-        cout<<"注意:\n    当前无学生数据,请先添加后排序"<<endl;
+        cout<<"error!:\n    当前无学生数据,请先添加后排序"<<endl;
         return;
     }
 
     //链表 简单选择排序法
-    for(;t->next!=NULL;t=t->next) {
-        for(p=t->next;p!=NULL;p=p->next) {
-            if(p->mathScore > t->mathScore){
+    for(;t->next!=NULL;t=t->next){
+        for(p=t->next;p!=NULL;p=p->next){
+            if(p->mathScore>t->mathScore){
                 p->swap(t);
             }
         }
     }
 
-    cout<<"*已按数学成绩排序成功 ";
+    cout<<"\t*已按数学成绩排序成功 ";
     printShortStar();
     cout<<endl;
     stuL.show();
@@ -493,27 +417,26 @@ void studentList::sortByMath() {
 /**
  *通过En排序学生
  */
-void studentList::sortByEn() {
+void studentList::sortByEn(){
     student *t=first;
     student *p=NULL;
 
-    //无数据后的退出
-    if(t==NULL){
+    if(t==NULL){//无数据后的退出
         printItemDot();
-        cout<<"注意:\n    当前无学生数据,请先添加后排序"<<endl;
+        cout<<"error!:\n    当前无学生数据,请先添加后排序"<<endl;
         return;
     }
 
     //链表 简单选择排序法
-    for(;t->next!=NULL;t=t->next) {
-        for(p=t->next;p!=NULL;p=p->next) {
-            if(p->enScore > t->enScore){
+    for(;t->next!=NULL;t=t->next){
+        for(p=t->next;p!=NULL;p=p->next){
+            if(p->enScore>t->enScore){
                 p->swap(t);
             }
         }
     }
 
-    cout<<"*已按英语成绩排序成功 ";
+    cout<<"\t*已按英语成绩排序成功 ";
     printShortStar();
     cout<<endl;
     stuL.show();
@@ -522,17 +445,13 @@ void studentList::sortByEn() {
 /**
  *显示所有学生信息
  */
-void studentList::show() {
+void studentList::show(){
     printStudentTableTitle();
-    student *t = first;
-    if(t){
-        while(t){
-            t->display();
-            t=t->next;
-        }
-    }else{
+    student *t=first;
+    if(t) while(t){ t->display(); t=t->next; }
+    else{
         printItemDot();
-        cout<<"注意:当前无学生信息"<<endl;
+        cout<<"error!:当前无学生信息"<<endl;
     }
     printStudentTableFoot();
 }
@@ -555,42 +474,24 @@ studentList::~studentList()
     // save(); //有bug的文件保存
 }
 
-/**
- * 创建学生信息相关逻辑
- */
 void createStudent(){
-    cout<<"*正在创建学生信息 ";
-    printShortStar();
-    cout<<endl;
+    cout<<"\t>./正在创建学生信息 ";
+    printSlowDot();
     stuL.add();
 }
 
-/**
- * 删除学生信息相关逻辑
- */
-void deleteStudent(){
-    stuL.remove();
-}
+void deleteStudent(){ stuL.remove(); }
 
-/**
- * 显示学生信息相关逻辑
- */
 void showAllStudents(){
-    cout<<"*显示所有学生信息 ";
-    printShortStar();
-    cout<<endl;
+    cout<<"\t>./显示所有学生信息 ";
+    printSlowDot();
     stuL.show();
 }
 
-/**
- * 修改学生信息相关逻辑
- */
 void editStudent(){
-    cout<<"*进入修改学生信息 ";
-    printShortStar();
-    cout<<endl;
+    cout<<"\t>./进入修改学生信息 ";
+    printSlowDot();
     stuL.edit();
-
 }
 
 /**
@@ -598,17 +499,16 @@ void editStudent(){
  */
 void searchStudents(){
     char chooseWayId;
-    cout<<"*如何查询学生信息 ";
-    printShortStar();
+    cout<<"\t.>/如何查询学生信息 ";
+    printSlowDot();
     cout<<endl;
+    printItemDot(); printLongStar();cout<<endl;
+    printItemDot(); cout<<"1.按学生的姓名查找(支持重名)"<<endl;
+    printItemDot(); cout<<"2.按学生的学号查找(学号唯一)"<<endl;
+    printItemDot(); cout<<"3.显示所有学生信息"<<endl;
+    printItemDot(); printLongStar();cout<<endl;
     cout<<endl;
-    printItemDot();printLongStar();cout<<endl;
-    printItemDot();cout<<"❤ 1.按学生的姓名查找(支持重名)"<<endl;
-    printItemDot();cout<<"❤ 2.按学生的学号查找(学号唯一)"<<endl;
-    printItemDot();cout<<"❤ 3.显示所有学生信息"<<endl;
-    printItemDot();printLongStar();cout<<endl;
-    cout<<endl;
-    printItemDot();cout<<"请选择查找方式:";
+    printItemDot(); cout<<"请选择查找方式:";
     cin>>chooseWayId;
     switchSearchFun(chooseWayId);
 }
@@ -619,43 +519,37 @@ void searchStudents(){
  */
 void switchSearchFun(char chooseWayId){
     switch(chooseWayId){
-        case '1':
-            //按姓名
+        case '1'://按姓名
             stuL.searchByName();
             break;
-        case '2':
-            //按学号
+        case '2'://按学号
             stuL.searchById();
             break;
-        case '3':
-            //全部
+        case '3'://全部
             showAllStudents();
             break;
         default:
-            printItemDot();cout<<"无您所输入的选项,请确认后重试:";
+            printItemDot(); cout<<"error!: 无您所输入的选项,请确认后重试:";
             cin>>chooseWayId;
             switchSearchFun(chooseWayId);
     }
 }
-
 
 /**
  * 排序学生信息逻辑
  */
 void sortStudents(){
     char chooseWayId;
-    cout<<"*如何排序学生信息 ";
-    printShortStar();
+    cout<<"\t*如何排序学生信息 ";
     cout<<endl;
+    printItemDot(); printLongStar(); cout<<endl;
+    printItemDot(); cout<<"1.按学生的DS成绩"<<endl;
+    printItemDot(); cout<<"2.按学生的数学成绩"<<endl;
+    printItemDot(); cout<<"3.按学生的英语成绩"<<endl;
+    printItemDot(); cout<<"4.按学生的学号"<<endl;
+    printItemDot(); printLongStar(); cout<<endl;
     cout<<endl;
-    printItemDot();printLongStar();cout<<endl;
-    printItemDot();cout<<"❤ 1.按学生的C++成绩"<<endl;
-    printItemDot();cout<<"❤ 2.按学生的数学成绩"<<endl;
-    printItemDot();cout<<"❤ 3.按学生的英语成绩"<<endl;
-    printItemDot();cout<<"❤ 4.按学生的学号"<<endl;
-    printItemDot();printLongStar();cout<<endl;
-    cout<<endl;
-    printItemDot();cout<<"请选择排序方式:";
+    printItemDot(); cout<<"请选择排序方式:";
     cin>>chooseWayId;
     switchSortFun(chooseWayId);
 }
@@ -667,23 +561,15 @@ void sortStudents(){
 void switchSortFun(char chooseWayId){
     switch(chooseWayId){
         case '1':
-            //按DS
-            stuL.sortByDS();
-            break;
+            stuL.sortByDS(); break;
         case '2':
-            //按数学
-            stuL.sortByMath();
-            break;
+            stuL.sortByMath(); break;
         case '3':
-            //按英语
-            stuL.sortByEn();
-            break;
+            stuL.sortByEn(); break;
         case '4':
-            //按学号
-            stuL.sortById();
-            break;
+            stuL.sortById(); break;
         default:
-            printItemDot();cout<<"无您所输入的选项,请确认后重试:";
+            printItemDot(); cout<<"error!: 无您所输入的选项,请确认后重试:";
             cin>>chooseWayId;
             switchSortFun(chooseWayId);
     }
@@ -692,10 +578,11 @@ void switchSortFun(char chooseWayId){
 void printStudentTableTitle(){
     cout<<endl;
     cout<<"------------------学生列表------------------"<<endl;
-    cout<<"\t"<<"学号"<<"  \t"<<"姓名"<<"  \t"<<"C++"<<"  \t"<<"数学"<<"  \t"<<"英语"<<endl;
+    cout<<"\t"<<"学号"<<"  \t"<<"姓名"<<"  \t"<<"DS"<<"  \t"<<"数学"<<"  \t"<<"英语"<<endl;
 }
 
 void printStudentTableFoot(){
-    cout << "------------------列表结束------------------" << endl;
+    cout<<"------------------列表结束------------------"<<endl;
     cout<<endl;
+    Sleep(1500);
 }

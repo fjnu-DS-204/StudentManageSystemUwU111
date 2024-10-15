@@ -4,8 +4,8 @@
 using namespace std;
 
 void clear_screen(){
-    // system("cls");
-    cout << "\033c";
+    system("cls");
+    // cout << "\033c";
 }
 
 void error_1(){
@@ -66,5 +66,5 @@ void error_7(){
     cout<<endl; printDividerStar(); cout<<endl; cout<<endl;
     clear_screen(); Sleep(1000);
 	printItemDot(); cout<<"这样并不好玩，"<<currentUser<<endl; Sleep(1000);
-
+    
 }
