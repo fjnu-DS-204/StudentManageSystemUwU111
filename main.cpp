@@ -5,8 +5,8 @@ studentList stuL;
 
 int main(){
     // SetConsoleOutputCP(65001);
-    printGreetMenu();
-    while(true) printMainMenu();
+    print_greeting_menu();
+    while(true) print_MAIN_menu();
     // system("pause");
     getchar();getchar();
     return 0;
