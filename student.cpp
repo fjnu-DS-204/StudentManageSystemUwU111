@@ -12,6 +12,8 @@ int student::check_day(int day){
     return day;
 }
 
+///
+
 int student::check_month(int month){
     if(month<=0||month>12){
         print_itemdot(); cout<<"error!: 学生出生月份输入有误,日期范围1~12,请再次尝试:"; cin>>month;
