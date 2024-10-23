@@ -25,6 +25,7 @@ void print_itemdot();
 void print_commandsign();
 void print_slowdot();
 
+void print_welcome_logo();
 void print_greeting_menu();
 void print_MAIN_menu();
 
@@ -32,9 +33,13 @@ void print_MAIN_menu();
 extern int tryPasswordCount;
 void check_loginPW(string password);
 char* get_time();
+void change_title();
 void choose_fuc(char chooseItemId);
 
 /* icey交互类 */
+void plz_watch_me(); //禁用最小化和关闭按钮，控制台保持前置
+void change_title_icey();
+void change_cmd_color(int type);
 void clear_screen();
 void error_1();
 void error_2();
