@@ -18,6 +18,8 @@
 - 数据存储至文件（半完成）（有bug
 - 统计各分数段功能 :white_check_mark:
 - 重构所有交互 :white_check_mark:
+- 取消右上角关闭和最小化按钮且程序始终保持在前台 :white_check_mark:
+- 更好看的logo以及cmd的title :white_check_mark:
 
 ## 废案
 
