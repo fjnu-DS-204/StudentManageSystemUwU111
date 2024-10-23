@@ -38,7 +38,7 @@ int month_31[7]={1,3,5,7,8,10,12};
 int month_30[4]={4,6,9,11};
 
 int student::special_check(){
-    if(find(begin(month_31),end(month_31),MM)!=end(month_31)){ return 1;}//我边界写的足够好，这里什么都不需要做，但出于工整考虑还是加上
+    if(find(begin(month_31),end(month_31),MM)!=end(month_31)){ return 1;}//我边界写的足够好,这里什么都不需要做,但出于工整考虑还是加上
     if(find(begin(month_30),end(month_30),MM)!=end(month_30)){
         if(DD==31){ print_itemdot(); cout<<"error!: "<<MM<<"月怎么会有"<<DD<<"天呢,请重新输入年月日"<<endl; return 0;}
         return 1;
@@ -48,7 +48,7 @@ int student::special_check(){
         if(DD==29 && !check_leapyear(YY)){ print_itemdot();  cout<<"error!: 你这也不是闰年啊,哪来的第29天,请重新输入年月日 "<<endl; return 0; }
         if(DD>29){ print_itemdot(); cout<<"error!: "<<MM<<"月怎么会有"<<DD<<"天呢,请重新输入年月日"<<endl; return 0; }
     }
-    print_itemdot(); cout<<"ERROR!:这里有溢出的边界情况，位于 student.cpp special_check()"<<endl;
+    print_itemdot(); cout<<"ERROR!:这里有溢出的边界情况,位于 student.cpp special_check()"<<endl;
     return 0;
 }
 
@@ -147,7 +147,7 @@ void studentList::add(){
     student * p=first;
     while(p){
         if(p->id==t->id){
-            print_itemdot(); cout<<"error!: 学号输入错误或该学生已经存在 如需添加，请先删除原纪录再重新录入!"<<endl;
+            print_itemdot(); cout<<"error!: 学号输入错误或该学生已经存在,如需添加,请先删除原纪录再重新录入!"<<endl;
             return;
         }
         p=p->next;
@@ -190,7 +190,7 @@ void studentList::edit(){
     }
 
     if(!t){//t到最后为空
-        print_itemdot(); cout<<"error!:\n    未找到您所要修改的学生\n     请确认学号后重试"<<endl;
+        print_itemdot(); cout<<"error!: 未找到您所要修改的学生,请确认学号后重试"<<endl;
         return;
     }else{
         cout<<"\t*已为您查询到该学生 ";
@@ -203,7 +203,7 @@ void studentList::edit(){
     cout<<endl;
     print_itemdot(); cout<<"确认修改此学生吗(y/n) (默认为y) :";
     // cin>>isCheck;
-    getchar(); scanf("%c",&isCheck); //getchar先读掉前面的回车，用scanf来读入回车的情况
+    getchar(); scanf("%c",&isCheck); //getchar先读掉前面的回车,用scanf来读入回车的情况
     switch(isCheck){
         case 'Y':
         case 'y':
@@ -268,7 +268,7 @@ void studentList::remove(){
     }
     if(!t){//t到最后为空
         print_itemdot();
-        cout<<"error!: 未找到要删除的学生，请确认学号后重试"<<endl;
+        cout<<"error!: 未找到要删除的学生,请确认学号后重试"<<endl;
         return;
     }
     if(!p){//特判第一个就相同
@@ -298,7 +298,7 @@ void studentList::search_by_id(){
     cin>>tempId;
     while(tempId.length()!=10){//学号验证
         print_itemdot();
-        cout<<"error!: 学生学号输入有误，学号为十位整数，请再次尝试：";
+        cout<<"error!: 学生学号输入有误,学号为十位整数,请再次尝试：";
         cin>>tempId;
     }
     while(t){
@@ -308,7 +308,7 @@ void studentList::search_by_id(){
 
     if(!t){//t已跑到最后为空
         print_itemdot();
-        cout<<"error!:\n    未找到您所要查找的学生\n     请确认学号后重试"<<endl;
+        cout<<"error!: 未找到您所要查找的学生,请确认学号后重试"<<endl;
         return;
     }else{
         cout<<"\t*已为您查询到以下学生 "<<endl;
@@ -334,12 +334,12 @@ void studentList::search_by_name(){
         t=t->next;
     }
 
-    if(!p[0]){//p[0]为空，即t已跑到最后为空
+    if(!p[0]){//p[0]为空,即t已跑到最后为空
         print_itemdot();
-        cout<<"error!: 未找到您所要查找的学生，请确认姓名后重试"<<endl;
+        cout<<"error!: 未找到您所要查找的学生,请确认姓名后重试"<<endl;
         return;
     }else{
-        cout<<"\t*已为您查询到以下学生 "<<endl;
+        cout<<"\t*已为您查询到以下学生: "<<endl;
         print_stu_table_Title();
         for(int i=0;i<foundCount;++i) p[i]->display();
         print_stu_table_Foot();
@@ -375,7 +375,7 @@ void studentList::sort_by_ds(){
 
     if(t==NULL){//无数据后的退出
         print_itemdot();
-        cout<<"error!:\n    当前无学生数据,请先添加后排序"<<endl;
+        cout<<"error!: 当前无学生数据,请先添加后排序"<<endl;
         return;
     }
 
@@ -399,13 +399,13 @@ void studentList::show(){
     print_stu_table_Title();
     student *t=first;
     if(t) while(t){ t->display(); t=t->next; }
-    else{ print_itemdot(); cout<<"error!:当前无学生信息"<<endl; }
+    else{ print_itemdot(); cout<<"error!: 当前无学生信息"<<endl; }
     print_stu_table_Foot();
 }
 
 void studentList::show_by_level(){
     student *t=first;
-    if(!t){ print_stu_table_Title(); print_itemdot(); cout<<"error!:当前无学生信息"<<endl; print_stu_table_Foot(); return ;}
+    if(!t){ print_stu_table_Title(); print_itemdot(); cout<<"error!: 当前无学生信息"<<endl; print_stu_table_Foot(); return ;}
     if(t->DSScore<=100 && t->DSScore>90){
         print_stu_table_Title_sp(0);
         while(t->DSScore>90){ t->display(); t=t->next; }
@@ -480,8 +480,7 @@ void search_stu(){
     print_itemdot(); cout<<"3.显示所有学生信息"<<endl;
     print_itemdot(); print_longstar(); cout<<endl;
     cout<<endl;
-    print_itemdot(); cout<<"请选择查找方式:";
-    cin>>chooseWayId;
+    print_itemdot(); cout<<"请选择查找方式: "; cin>>chooseWayId;
     switch_search_fuc(chooseWayId);
 }
 
@@ -501,8 +500,7 @@ void switch_search_fuc(char chooseWayId){
             show_all_stu();
             break;
         default:
-            print_itemdot(); cout<<"error!: 无您所输入的选项,请确认后重试:";
-            cin>>chooseWayId;
+            print_itemdot(); cout<<"error!: 无您所输入的选项,请确认后重试: "; cin>>chooseWayId;
             switch_search_fuc(chooseWayId);
     }
 }
@@ -519,8 +517,7 @@ void sort_stu(){
     print_itemdot(); cout<<"2.按学生的学号"<<endl;
     print_itemdot(); print_longstar(); cout<<endl;
     cout<<endl;
-    print_itemdot(); cout<<"请选择排序方式:";
-    cin>>chooseWayId;
+    print_itemdot(); cout<<"请选择排序方式: "; cin>>chooseWayId;
     switch_sort_fuc(chooseWayId);
 }
 
@@ -535,8 +532,7 @@ void switch_sort_fuc(char chooseWayId){
         case '2':
             stuL.sort_by_id(); break;
         default:
-            print_itemdot(); cout<<"error!: 无您所输入的选项,请确认后重试:";
-            cin>>chooseWayId;
+            print_itemdot(); cout<<"error!: 无您所输入的选项,请确认后重试: "; cin>>chooseWayId;
             switch_sort_fuc(chooseWayId);
     }
 }

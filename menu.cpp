@@ -10,11 +10,26 @@ void print_slowdot(){ for(int i=1;i<=3;++i){ cout<<"."; Sleep(500);} cout<<endl;
 
 int tryPasswordCount = 0;// 登录失败计数
 
+void print_welcome_logo(){
+    cout<<"      ___           ___           ___       ___           ___           ___           ___     "<<endl;
+    cout<<"     /\\__\\         /\\  \\         /\\__\\     /\\  \\         /\\  \\         /\\__\\         /\\  \\    "<<endl;
+    cout<<"    /:/ _/_       /::\\  \\       /:/  /    /::\\  \\       /::\\  \\       /::|  |       /::\\  \\   "<<endl;
+    cout<<"   /:/ /\\__\\     /:/\\:\\  \\     /:/  /    /:/\\:\\  \\     /:/\\:\\  \\     /:|:|  |      /:/\\:\\  \\  "<<endl;
+    cout<<"  /:/ /:/ _/_   /::\\~\\:\\  \\   /:/  /    /:/  \\:\\  \\   /:/  \\:\\  \\   /:/|:|__|__   /::\\~\\:\\  \\ "<<endl;
+    cout<<" /:/_/:/ /\\__\\ /:/\\:\\ \\:\\__\\ /:/__/    /:/__/ \\:\\__\\ /:/__/ \\:\\__\\ /:/ |::::\\__\\ /:/\\:\\ \\:\\__\\"<<endl;
+    cout<<" \\:\\/:/ /:/  / \\:\\~\\:\\ \\/__/ \\:\\  \\    \\:\\  \\  \\/__/ \\:\\  \\ /:/  / \\/__/~~/:/  / \\:\\~\\:\\ \\/__/"<<endl;
+    cout<<"  \\::/_/:/  /   \\:\\ \\:\\__\\    \\:\\  \\    \\:\\  \\        \\:\\  /:/  /        /:/  /   \\:\\ \\:\\__\\  "<<endl;
+    cout<<"   \\:\\/:/  /     \\:\\ \\/__/     \\:\\  \\    \\:\\  \\        \\:\\/:/  /        /:/  /     \\:\\ \\/__/  "<<endl;
+    cout<<"    \\::/  /       \\:\\__\\        \\:\\__\\    \\:\\__\\        \\::/  /        /:/  /       \\:\\__\\    "<<endl;
+    cout<<"     \\/__/         \\/__/         \\/__/     \\/__/         \\/__/         \\/__/         \\/__/    "<<endl;
+}
+
 void print_greeting_menu(){
     string password;
 
+    print_welcome_logo();
     print_longstar(); cout<<"欢迎进入学生管理系统"; print_longstar(); cout<<endl;
-    print_itemdot(); cout<<"Made by noone & xjs114 & 001Pro-Max & "<<endl;
+    print_itemdot(); cout<<"Made by noone & xjs114 & 001Pro-Max & shingosen"<<endl;
     print_itemdot(); cout<<"当前系统时间是:  "; cout << get_time();
     print_itemdot(); cout<<"进入该系统设有密码,只有"<<TryPasswordTimes<<"次机会"<<endl;
     print_itemdot(); cout<<"温馨向您提示,登录密码为: "<<TruePassword<<endl;
