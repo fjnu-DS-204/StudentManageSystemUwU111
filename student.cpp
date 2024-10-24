@@ -12,7 +12,6 @@ int student::check_day(int day){
     return day;
 }
 
-///
 
 int student::check_month(int month){
     if(month<=0||month>12){
