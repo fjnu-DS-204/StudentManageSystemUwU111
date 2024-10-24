@@ -2,6 +2,10 @@
 
 int Failure_num=0;
 
+void change_title(){
+    system("title 学生信息管理系统UwU");
+}
+
 char* get_time(){/* 当前系统时间，返回值为时间字符串的地址 */
     time_t now=time(0);// 把 now 转换为字符串形式
     char* dt=ctime(&now);
@@ -56,13 +60,14 @@ void choose_fuc(char chooseItemId){
             // print_itemdot();cout<<"嘻嘻，数据保存成功了，看起来bug修好了"<<endl;
             print_itemdot();cout<<"不嘻嘻，你的数据保存不了哦"<<endl;
             print_itemdot();cout<<"感谢使用喵，拜拜喵"<<endl;
+            getchar(),getchar();
             exit(0);
         }
             break;
         default:
             //输出提示,再次输入
             Failure_num++;
-                 if(Failure_num==1){ error_1(); cin>>chooseItemId; choose_fuc(chooseItemId); }
+                 if(Failure_num==1){ error_7(); cin>>chooseItemId; choose_fuc(chooseItemId); }
             else if(Failure_num==2){ error_2(); cin>>chooseItemId; choose_fuc(chooseItemId); }
             else if(Failure_num==3){ error_3(); cin>>chooseItemId; choose_fuc(chooseItemId); }
             else if(Failure_num==4){ error_4(); cin>>chooseItemId; choose_fuc(chooseItemId); }
