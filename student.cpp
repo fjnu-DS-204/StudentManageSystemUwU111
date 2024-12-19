@@ -12,7 +12,6 @@ int student::check_day(int day){
     return day;
 }
 
-
 int student::check_month(int month){
     if(month<=0||month>12){
         print_itemdot(); cout<<"error!: 学生出生月份输入有误,日期范围1~12,请再次尝试:"; cin>>month;
@@ -65,10 +64,14 @@ void student::add(){
     print_itemdot(); cout<<"请输入学生姓名:"; cin>>name;
     string tempId="";
     int tempScore=0;
+    string tempidcard="";
+    string tempphone_number="";
+    
     //学号处理
     print_itemdot(); cout<<"请输入学生学号(十位):"; cin>>tempId;
     while(tempId.length()!=10){ print_itemdot(); cout<<"error!: 学生学号输入有误,学号为十位整数,请再次尝试:"; cin>>tempId;}
     id=tempId;
+
 
     //成绩处理
     print_itemdot(); cout<<"请输入DS课程的期末成绩:"; cin>>tempScore;
@@ -80,6 +83,17 @@ void student::add(){
     print_itemdot(); cout<<"请输入出生月份(MM):"; cin>>tmp; MM=check_month(tmp);
     print_itemdot(); cout<<"请输入出生年份(YY):"; cin>>tmp; YY=check_year(tmp);
     if(!special_check()) goto need_redone_in_edit;
+    //身份证 
+    print_itemdot(); cout<<"请输入身份证(十八位):"; cin>>tempidcard;
+     while(tempidcard.length()!=18){ print_itemdot(); cout<<"error!: 学生身份证号码输入有误,改号码为十八位整数,请再次尝试:"; cin>>tempidcard;}
+    idcard=tempidcard;
+
+    //电话号码
+    print_itemdot();cout<<"请输入电话号码(十一位)：";cin>>tempphone_number;
+    while(tempphone_number.length()!=11){print_itemdot();cout<<"error!:学生电话号码输入有误，电话号码应为十一位整数，请再次尝试:";cin>>tempphone_number;}
+    phone_number=tempphone_number;
+    
+    
 
     next=NULL;
 }
@@ -92,7 +106,7 @@ void student::add(){
 //     in>>name>>id>>DSScore>>mathScore>>enScore;
 // }
 
-void student::display(){ cout<<id<<"\t"<<name<<"  \t"<<DSScore<<"   \t"<<DD<<"/"<<MM<<"/"<<YY<<endl; }
+void student::display(){ cout<<"  "<<id<<"\t"<<name<<"  \t"<<DSScore<<"   \t"<<DD<<"/"<<MM<<"/"<<YY<<" \t"<<idcard<<" \t"<<phone_number<<endl; }
 
 void student::swap(student *toExchange){//与传入的对象交换信息 用于简单排序法时交换
     string tempName,tempId;
@@ -545,16 +559,16 @@ void print_stu_table_Title_sp(int op){
     else if(op==2) s="良好";
     else if(op==3) s="合格";
     else if(op==4) s="不合格";
-    cout<<endl<<"------------------"<<s<<"------------------"<<endl;
-    cout<<"\t"<<"学号"<<"  \t"<<"姓名"<<"  \t"<<"DS"<<"  \t"<<"DD/MM/YY"<<endl;
+    cout<<endl<<"----------------------------------"<<s<<"--------------------------------------------"<<endl;
+    cout<<"  \t"<<"学号"<<"  \t"<<"姓名"<<"  \t"<<"DS"<<"  \t"<<"DD/MM/YY"<<" \t"<<"身份证号码"<<"          \t"<<"电话号码"<<endl;
 }
 
 void print_stu_table_Title(){
-    cout<<endl<<"------------------学生列表------------------"<<endl;
-    cout<<"\t"<<"学号"<<"  \t"<<"姓名"<<"  \t"<<"DS"<<"  \t"<<"DD/MM/YY"<<endl;
+    cout<<endl<<"----------------------------------学生列表-----------------------------------------------"<<endl;
+     cout<<"  \t"<<"学号"<<"  \t"<<"姓名"<<"  \t"<<"DS"<<"  \t"<<"DD/MM/YY"<<" \t"<<"身份证号码"<<"            \t"<<"电话号码"<<endl;
 }
 
 void print_stu_table_Foot(){
-    cout<<"------------------列表结束------------------"<<endl<<endl;
+    cout<<"----------------------------------列表结束-----------------------------------------------"<<endl<<endl;
     Sleep(1500);
 }
